@@ -1,0 +1,75 @@
+// forum-sections.component.scss
+.sections-container {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 15px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+  h2 {
+    margin: 0 0 15px;
+    font-size: 22px;
+    color: #333;
+  }
+}
+
+.section-list {
+  .section-item {
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: #f8f9fa;
+    cursor: pointer;
+
+    h3 {
+      margin: 0;
+      font-size: 18px;
+      color: #444;
+    }
+
+    .toggle-icon {
+      font-size: 20px;
+      color: #666;
+    }
+
+    &:hover {
+      background-color: #e9ecef;
+    }
+  }
+
+  .subsection-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+
+    &.expanded {
+      max-height: 200px; // Достатньо для підрозділів, можна налаштувати
+    }
+
+    li {
+      padding: 8px 15px;
+      border-top: 1px solid #eee;
+
+      a {
+        text-decoration: none;
+        color: #007bff;
+
+        &:hover {
+          text-decoration: underline;
+          color: #0056b3;
+        }
+      }
+    }
+  }
+}

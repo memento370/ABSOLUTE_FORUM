@@ -1,0 +1,17 @@
+<!-- forum-sections.component.html -->
+<div class="sections-container">
+    <h2>Розділи форуму</h2>
+    <div class="section-list">
+      <div *ngFor="let section of sections" class="section-item">
+        <div class="section-header" (click)="toggleSection(section.name)">
+          <h3>{{ section.name }}</h3>
+          <span class="toggle-icon">{{ expandedSection === section.name ? '−' : '+' }}</span>
+        </div>
+        <ul class="subsection-list" [ngClass]="{'expanded': expandedSection === section.name}">
+          <li *ngFor="let subsection of section.subsections">
+            <a [href]="subsection.link || '#'">{{ subsection.name }}</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
