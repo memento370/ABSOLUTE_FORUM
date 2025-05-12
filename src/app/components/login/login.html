@@ -1,16 +1,19 @@
 <div class="container mt-5">
   <ul class="nav nav-tabs">
     <li class="nav-item">
-      <a class="nav-link" [class.active]="isRegister" (click)="isRegister = true">Реєстрація</a>
+      <a class="nav-link" [class.active]="statusTab=='register'" (click)="statusTab='register'">Реєстрація</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" [class.active]="!isRegister" (click)="isRegister = false">Авторизація</a>
+      <a class="nav-link" [class.active]="statusTab=='login'" (click)="statusTab='login'">Авторизація</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" [class.active]="statusTab=='restore'" (click)="statusTab='restore'">Відновлення паролю</a>
     </li>
   </ul>
 
   <div class="card p-4 mt-3">
     <!-- Реєстрація -->
-    <div *ngIf="isRegister">
+    <div *ngIf="statusTab=='register'">
       <div class="mb-3">
         <label class="form-label">E-mail</label>
         <input type="email" class="form-control" [(ngModel)]="email" />
@@ -21,7 +24,7 @@
       </div>
       <div class="mb-3">
         <label class="form-label">Нікнейм</label>
-        <input type="text" class="form-control" [(ngModel)]="nickname" />
+        <input type="text" class="form-control" [(ngModel)]="nick" />
       </div>
       <div class="mb-3">
         <label class="form-label">Пароль</label>
@@ -32,9 +35,9 @@
         <input type="password" class="form-control" [(ngModel)]="confirmPassword" />
       </div>
       
-      <button class="btn btn-primary w-100" (click)="sendEmailCode()">Відправити код на e-mail</button>
+      <button *ngIf="!isCodeSent" class="btn btn-primary w-100" (click)="sendVerificationCode()">Відправити код на e-mail</button>
       
-      <div *ngIf="emailSent" class="mt-3">
+      <div *ngIf="isCodeSent" class="mt-3">
         <label class="form-label">Підтвердіть код</label>
         <input type="text" class="form-control mb-2" [(ngModel)]="confirmationCode" />
         <button class="btn btn-success w-100" (click)="register()">Реєстрація</button>
@@ -42,7 +45,7 @@
     </div>
 
     <!-- Авторизація -->
-    <div *ngIf="!isRegister">
+    <div *ngIf="statusTab=='login'">
       <div class="mb-3">
         <label class="form-label">Логін</label>
         <input type="text" class="form-control" [(ngModel)]="login" />
@@ -52,6 +55,38 @@
         <input type="password" class="form-control" [(ngModel)]="password" />
       </div>
       <button class="btn btn-primary w-100" (click)="loginUser()">Авторизація</button>
+    </div>
+ 
+    <div *ngIf="statusTab== 'restore'">
+      <div *ngIf="statusRestorePassword == 'default'">
+        <div class="mb-3">
+          <label class="form-label">Введіть ваш e-mail</label>
+          <input type="text" class="form-control" [(ngModel)]="email" />
+        </div>
+        <button class="btn btn-primary w-100" (click)="sendCodeRestore()">Відправити код на e-mail</button>  
+      </div>
+      <div *ngIf="statusRestorePassword == 'codeSentRestore'">
+        <div class="mb-3">
+          <label class="form-label">Введіть код підтвердження</label>
+          <input type="text" class="form-control" [(ngModel)]="codeRestorePass" />
+        <button class="btn btn-primary w-100" (click)="approweCodeRestore()">Підтвердити скидання паролю</button>
+        </div>
+      </div>
+      <div *ngIf="statusRestorePassword == 'codeSentRestoreApply'">
+        <div class="mb-3">
+          <label class="form-label">Введіть новий пароль</label>
+          <input type="text" class="form-control" [(ngModel)]="newPassword" />
+          <label class="form-label">Підтвердіть новий пароль</label>
+          <input type="text" class="form-control" [(ngModel)]="confirmNewPassword" />
+        <button class="btn btn-primary w-100" (click)="changePassword()">Змінити пароль</button>
+        </div>
+      </div>
+      <div *ngIf="statusRestorePassword == 'passwordRestoreSuccses'">
+        <div class="mb-3">
+         <h5>Пароль успішно змінено!Авторизуйтесь!</h5>
+        </div>
+      </div>
+
     </div>
   </div>
 </div>

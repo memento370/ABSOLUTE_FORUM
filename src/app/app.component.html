@@ -1,4 +1,3 @@
-<!-- app.component.html -->
 <div class="forum-container">
   <!-- Шапка форуму -->
   <header class="forum-header">
@@ -8,7 +7,7 @@
     <div class="auth-panel">
 
       <ng-container *ngIf="isAuthenticated; else notAuthenticated">
-        <span class="username">Привіт, {{username}}!</span>
+        <span class="username">Привіт,username!</span>
         <button (click)="logout()">Вийти</button>
       </ng-container>
       <ng-template #notAuthenticated>
@@ -17,14 +16,13 @@
       </ng-template>
     </div>
   </header>
-
   <!-- Місце для майбутніх компонентів -->
   <main class="forum-content">
-    <app-forum-sections></app-forum-sections>
+    <router-outlet></router-outlet>
   </main>
-
   <!-- Нижня панель -->
   <footer class="forum-footer">
     <p>© 2025 Мій Форум. Усі права захищено.</p>
   </footer>
 </div>
+

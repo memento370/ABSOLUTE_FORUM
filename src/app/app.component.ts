@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { Login } from './components/login/login';
-import { ModalService } from './components/service/modal.service';
-import { ModalComponent } from './components/service/modal.component';
+import { ModalService } from './service/modal.service';
+import { HttpClient } from '@angular/common/http';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-root',
@@ -11,10 +12,16 @@ import { ModalComponent } from './components/service/modal.component';
   standalone: false,
 })
 export class AppComponent {
-  isAuthenticated: boolean = false; // Стан авторизації
-  username: string = ''; // Ім'я користувача (буде видно після авторизації)
 
-  constructor(private modalService: ModalService) {}
+  token: string | null = null;
+  isAuthenticated = false;
+
+ 
+  constructor(
+    private modalService: ModalService,
+    private http: HttpClient,
+    private toastr: ToastrService
+  ) {}
 
   ngOnInit(): void {
     // Тут можна додати логіку перевірки авторизації,
@@ -23,31 +30,37 @@ export class AppComponent {
   }
 
   checkAuthentication(): void {
-    // Тимчасова логіка для прикладу
-    // У реальному проекті це може бути перевірка токена
-    const token = localStorage.getItem('authToken');
-    if (token) {
-      this.isAuthenticated = true;
-      this.username = localStorage.getItem('username') || 'User';
+    const token = localStorage.getItem('token');
+    this.http.post('http://localhost:8080/api/forum/user/check-token',
+      token )
+   .subscribe({
+     next: (valid) => {
+      if(valid){
+        
+      }else{
+        //токен не підтверджено,видалити токен
+      }
+
+       },
+     error: (err) => {
+         this.toastr.error(err.error);
+     }, 
+  });
     }
-  }
+  
 
   login(): void {
     // Тимчасова логіка для демонстрації
     this.isAuthenticated = true;
-    this.username = 'TestUser';
     localStorage.setItem('authToken', 'some-token');
-    localStorage.setItem('username', this.username);
   }
 
   logout(): void {
     this.isAuthenticated = false;
-    this.username = '';
     localStorage.removeItem('authToken');
     localStorage.removeItem('username');
-  }
+  } 
   openModal() {
-    this.modalService.open(Login);
-  }
+    this.modalService.showComponentInModal(Login, { });  }
  
-}
+} 

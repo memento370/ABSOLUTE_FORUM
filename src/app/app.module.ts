@@ -8,13 +8,15 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ForumSections } from './components/forum-sections/forum-sections';
 import { Login } from './components/login/login';
-
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { TopicSections } from './components/topic-sections/topic-sections';
 
 @NgModule({
   declarations: [
     AppComponent,
     ForumSections,
-    Login
+    Login,
+    TopicSections
   ],
   imports: [
     BrowserModule,
@@ -24,6 +26,7 @@ import { Login } from './components/login/login';
     ToastrModule.forRoot(),
     BrowserAnimationsModule,
     ReactiveFormsModule,
+    NgbModule
     
 
   ],
