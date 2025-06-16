@@ -52,7 +52,7 @@
                 }
               ],
               "outputHashing": "all",
-              "baseHref": "/forum/"
+              "baseHref": "/"
             },
             "development": {
               "optimization": false,
