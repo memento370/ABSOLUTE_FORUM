@@ -1,11 +1,13 @@
+import { Comment } from "./comment";
+import { User } from "./user";
 
-
-export interface Topic{
-    id:number;
-    status:string;
-    createdBy:number;
-    creationDate:Date;
-    section:string;
-    title:string;
-    message:string;
+export interface Topic {
+  id: number;
+  status: string;
+  createdBy: User;            
+  creationDate: Date;
+  title: string;
+  message: string;
+  subSection: string;
+  comments: Comment[];      
 }

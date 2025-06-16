@@ -1,17 +1,24 @@
-<div class="topic-sections">
-    <button (click)="createTopic()">Створити тему</button>
-  
-    <div class="search">
+<div class="topic-root">
+  <div class="topic-header">
+    <app-forum-breadcrumb></app-forum-breadcrumb>
+    <!-- <h2 class="topic-title">Розділ : {{ getSubsectionName(typeTopic) }}</h2> -->
+    <div class="topic-search">
       <input
         type="text"
-        placeholder="Пошук тем за назвою"
+        placeholder="Пошук тем за назвою..."
         [(ngModel)]="searchTerm"
         (input)="filterTopics()"
       />
     </div>
-  
-    <ul>
-      <li *ngFor="let topic of filteredTopics">{{ topic.name }}</li>
-    </ul>
+  </div>
+
+  <button class="topic-create-btn" (click)="createTopic()">
+    <i class="fa fa-plus"></i> Створити тему
+  </button>
+
+  <ul class="topic-list">
+    <li *ngFor="let topic of filteredTopics" class="topic-item" (click)="openTopic(topic.id,topic.subSection)">
+      <i class="fa fa-file-text"></i> {{ topic.title }}
+    </li>
+  </ul>
 </div>
-  

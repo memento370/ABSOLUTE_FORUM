@@ -1,0 +1,141 @@
+<div class="topic-breadcrumb-container">
+  <app-forum-breadcrumb [topicTitle]="topic?.title"></app-forum-breadcrumb>
+</div>
+<div class="topic-page-root">
+  <!-- ----------- Створення теми ----------- -->
+  <ng-container *ngIf="isCreateMode; else viewTopicBlock">
+    <div class="topic-author-block">
+      <img class="topic-author-avatar"
+           [src]="currentUser?.avatar_url || ('https://ui-avatars.com/api/?name=' + (currentUser?.nick || ''))"
+           alt="аватар" />
+      <div class="topic-author-nickname">
+        <i class="fa fa-user"></i> {{ currentUser?.nick || 'Ви' }}
+      </div>
+      <div class="topic-author-title">
+        {{ currentUser?.title || 'Учасник форуму' }}
+      </div>
+    </div>
+    <div class="topic-main-block">
+      <div class="topic-page-header">
+        <div class="topic-section-selectors">
+          <select class="topic-section-select"
+                  [(ngModel)]="selectedSection"
+                  (change)="onSectionChange()"
+                  required>
+            <option value="">Виберіть розділ</option>
+            <option *ngFor="let s of sections" [value]="s.name">{{ s.name }}</option>
+          </select>
+          <select class="topic-section-select"
+                  [(ngModel)]="newTopic.subSection"
+                  required>
+            <option value="">Виберіть підсекцію</option>
+            <option *ngFor="let sub of getSubsectionsForSelectedSection()" [value]="sub.link">{{ sub.name }}</option>
+          </select>
+        </div>
+        <input class="topic-page-title-input"
+               [(ngModel)]="newTopic.title"
+               placeholder="Назва теми"
+               maxlength="120" />
+      </div>
+      <div class="topic-page-content">
+        <textarea class="topic-page-textarea"
+                  rows="7"
+                  [(ngModel)]="newTopic.message"
+                  placeholder="Введіть текст теми..."
+                  maxlength="5000"></textarea>
+        <button class="topic-page-btn" (click)="saveTopic()">
+          <i class="fa fa-paper-plane"></i> Створити тему
+        </button>
+      </div>
+    </div>
+  </ng-container>
+
+  <!-- ----------- Перегляд/Редагування теми ----------- -->
+  <ng-template #viewTopicBlock>
+    <div class="topic-author-block">
+      <img class="topic-author-avatar"
+           [src]="author?.avatar_url || ('https://ui-avatars.com/api/?name=' + (author?.nick || ''))"
+           alt="аватар" />
+      <div class="topic-author-nickname">
+        <i class="fa fa-user"></i> {{ author?.nick || 'Unknown' }}
+      </div>
+      <div class="topic-author-title">
+        {{ author?.title || 'Учасник форуму' }}
+      </div>
+    </div>
+    <div class="topic-main-block">
+      <div class="topic-page-header">
+        <!-- Кнопки редагування/видалення -->
+        <div class="topic-action-btns" *ngIf="isTopicAuthor() && !editMode && !isCreateMode">
+          <button (click)="goToEditMode()" class="topic-action-btn">
+            <i class="fa fa-edit"></i> Редагувати
+          </button>
+          <button (click)="deleteTopic()" class="topic-action-btn">
+            <i class="fa fa-trash"></i> Видалити
+          </button>
+        </div>
+
+        <!-- Режим редагування -->
+        <div *ngIf="editMode && !isCreateMode && topic; else topicViewMode">
+          <input class="topic-page-title-input"
+                [(ngModel)]="topic!.title"
+                maxlength="120" />
+
+          <textarea class="topic-page-textarea"
+                    [(ngModel)]="topic!.message"
+                    maxlength="5000"></textarea>
+
+          <div class="topic-edit-btns">
+            <button class="topic-page-btn" (click)="saveTopicEdit()">
+              <i class="fa fa-check"></i> Зберегти
+            </button>
+            <button class="topic-action-btn" (click)="cancelEdit()">
+              <i class="fa fa-times"></i> Відмінити
+            </button>
+          </div>
+        </div>
+        <!-- Режим перегляду (за замовчуванням) -->
+        <ng-template #topicViewMode>
+          <h2 class="topic-page-title">
+            <i class="fa fa-file-text"></i> {{ topic?.title || '' }}
+          </h2>
+          <div class="topic-page-meta-block">
+            <div class="topic-page-meta-row">
+              <i class="fa fa-hashtag"></i>
+              <span class="topic-page-id">ID: {{ topic?.id }}</span>
+            </div>
+            <div class="topic-page-meta-row">
+              <i class="fa fa-list-alt"></i>
+              <span class="topic-page-type">{{ getSubsectionName(topic?.subSection) }}</span>
+            </div>
+            <div class="topic-page-meta-row">
+              <i class="fa fa-calendar"></i>
+              <span class="topic-page-date">{{ topic?.creationDate | date:'dd.MM.yyyy HH:mm' }}</span>
+            </div>
+          </div>
+        </ng-template>
+      </div>
+      <div class="topic-page-content" *ngIf="!editMode || isCreateMode">
+        <p class="topic-page-text">{{ topic?.message || '' }}</p>
+      </div>
+      <!-- Коментарі -->
+      <div *ngFor="let c of topic?.comments">
+        <app-forum-topic-comments
+          [comment]="c"
+          [currentUser]="currentUser"
+          (commentDeleted)="onCommentDeleted()"
+          (commentUpdated)="onCommentUpdated($event)"
+        ></app-forum-topic-comments>
+      </div>
+      <div class="topic-add-comment" *ngIf="!editMode && !isCreateMode">
+        <textarea [(ngModel)]="newComment"
+                  rows="3"
+                  maxlength="800"
+                  placeholder="Написати коментар..."></textarea>
+        <button class="topic-add-comment-btn" (click)="addComment()">
+          <i class="fa fa-reply"></i> Додати коментар
+        </button>
+      </div>
+    </div>
+  </ng-template>
+</div>

@@ -1,41 +1,84 @@
-import { Component, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Topic } from '../../models/topic';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { ToastrService } from 'ngx-toastr';
+import { BsModalRef } from 'ngx-bootstrap/modal';
+import { AuthService } from '../../service/AuthService';
+import { SECTIONS } from '../../constants/ForumSections';
 
 @Component({
   selector: 'app-topic-sections',
   templateUrl: './topic-sections.html',
   styleUrls: ['./topic-sections.css'],
-  standalone:false
+  standalone: false
 })
-export class TopicSections {
+export class TopicSections implements OnInit {
   typeTopic: string = '';
-  
-  topicList : Topic[] = [];
-
-  topics = [
-    { id: 1, name: 'Перша тема' },
-    { id: 2, name: 'Друга тема' },
-    { id: 3, name: 'Третя тема' }
-  ];
-
+  topicList: Topic[] = [];
   searchTerm: string = '';
-  filteredTopics = [...this.topics];
+  filteredTopics: Topic[] = [];
 
-  constructor(private route: ActivatedRoute) {}
-  
+  constructor(
+    private http: HttpClient,
+    private toastr: ToastrService,
+    public bsModalRef: BsModalRef,
+    private router: Router,
+    private route: ActivatedRoute,
+    private auth: AuthService
+  ) {}
+
   ngOnInit(): void {
+    this.route.paramMap.subscribe(params => {
+      this.typeTopic = params.get('type') || '';
+      this.loadTopicsBySection(this.typeTopic);
+    });
     this.typeTopic = this.route.snapshot.paramMap.get('type') || '';
-    // Можеш тепер підвантажити теми відповідно до типу
+
+    const subName = this.getSubsectionName(this.typeTopic);
+
+    if (!subName) {
+      this.toastr.error('Такої підсекції не існує!');
+      this.router.navigate(['/']);
+      return;
+    }
   }
 
-  createTopic() {
-    console.log('Натиснуто "Створити тему"');
+  loadTopicsBySection(section: string) {
+    // Розкодуємо, якщо адреса виглядає як %2Fdev-news
+    const decodedSection = decodeURIComponent(section);
+
+    this.http.get<Topic[]>(`http://localhost:8080/api/forum/topic/by-section/${decodedSection}`).subscribe({
+      next: topics => {
+        this.topicList = topics;
+        this.filteredTopics = topics;
+      },
+      error: (err) => {
+        this.toastr.error(err.error,'Помилка!');
+      }
+    });
   }
 
   filterTopics() {
-    this.filteredTopics = this.topics.filter(topic =>
-      topic.name.toLowerCase().includes(this.searchTerm.toLowerCase())
+    this.filteredTopics = this.topicList.filter(topic =>
+      topic.title?.toLowerCase().includes(this.searchTerm.toLowerCase())
     );
+  }
+
+  openTopic(id: number,subSection:string) {
+    this.router.navigate(['topic-type', subSection, 'topic', id]);
+  }
+
+  createTopic() {
+    this.router.navigate(['topic-type', this.typeTopic, 'topic', 'create'], { 
+      state: { subSection: this.typeTopic } 
+    });
+  }
+  getSubsectionName(typeTopic: string): string | null {
+    for (const section of SECTIONS) {
+      const found = section.subsections.find(sub => sub.link === typeTopic);
+      if (found) return found.name;
+    }
+    return null;
   }
 }

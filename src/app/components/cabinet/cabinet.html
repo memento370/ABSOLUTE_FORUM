@@ -1,0 +1,168 @@
+<div class="cabinet-root">
+  <!-- Sidebar -->
+  <nav class="cabinet-sidebar">
+    <div class="list-group cabinet-sidebar-list">
+      <button class="list-group-item"
+              [class.active]="activeTab==='profile'"
+              (click)="setTab('profile')">
+        <i class="fa-solid fa-user me-1"></i> Профіль
+      </button>
+      <button class="list-group-item"
+              [class.active]="activeTab==='security'"
+              (click)="setTab('security')">
+        <i class="fa-solid fa-shield-halved me-1"></i> Безпека
+      </button>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="cabinet-main">
+    <!-- AVATAR -->
+    <div class="cabinet-avatar-block">
+      <div class="avatar-img-wrapper">
+        <img [src]="user.avatar_url || 'https://ui-avatars.com/api/?name='+user.nick"
+             alt="Аватар"
+             class="cabinet-avatar-img" />
+        <button (click)="deleteAvatar()" class="icon-btn avatar-delete" title="Видалити аватар">
+          <i class="fa-solid fa-trash"></i>
+        </button>
+      </div>
+      <div class="cabinet-avatar-upload-global">
+        <input type="file" class="avatar-file" (change)="onAvatarSelected($event)" accept="image/*"/>
+        <button *ngIf="selectedAvatarFile"
+                class="icon-btn primary avatar-upload-btn"
+                (click)="uploadAvatar()" title="Завантажити аватар">
+          <i class="fa-solid fa-upload"></i> <span>Завантажити</span>
+        </button>
+        <div *ngIf="avatarUploadMessage" class="info-msg">{{ avatarUploadMessage }}</div>
+      </div>
+    </div>
+
+    <!-- PROFILE TAB -->
+    <div *ngIf="activeTab==='profile'" class="fields-col">
+      <!-- Нік -->
+      <div class="field-row">
+        <label>Нік:</label>
+        <ng-container *ngIf="!editNickMode; else nickEdit">
+          <span>{{ user.nick }}</span>
+          <button class="icon-btn" (click)="enableEditNick()" title="Редагувати нік">
+            <i class="fa-solid fa-pen"></i>
+          </button>
+        </ng-container>
+        <ng-template #nickEdit>
+          <input class="form-control" [(ngModel)]="editedNick" />
+          <button class="icon-btn success" (click)="saveNick()" title="Зберегти">
+            <i class="fa-solid fa-check"></i>
+          </button>
+          <button class="icon-btn" (click)="cancelEditNick()" title="Скасувати">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </ng-template>
+      </div>
+      <!-- Титул -->
+      <div class="field-row">
+        <label>Титул:</label>
+        <ng-container *ngIf="!editTitleMode; else titleEdit">
+          <span>{{ user.title }}</span>
+          <button class="icon-btn" (click)="enableEditTitle()" title="Редагувати титул">
+            <i class="fa-solid fa-pen"></i>
+          </button>
+        </ng-container>
+        <ng-template #titleEdit>
+          <input class="form-control" [(ngModel)]="editedTitle" />
+          <button class="icon-btn success" (click)="saveTitle()" title="Зберегти">
+            <i class="fa-solid fa-check"></i>
+          </button>
+          <button class="icon-btn" (click)="cancelEditTitle()" title="Скасувати">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </ng-template>
+      </div>
+      <!-- Статус -->
+      <div class="field-row">
+        <label>Статус:</label>
+        <span>{{ user.status }}</span>
+      </div>
+      <div *ngIf="message" class="info-msg">{{ message }}</div>
+    </div>
+
+    <!-- SECURITY TAB -->
+    <div *ngIf="activeTab==='security'" class="fields-col">
+      <!-- Логін -->
+      <div class="field-row">
+        <label>Логін:</label>
+        <ng-container *ngIf="!editLoginMode; else loginEdit">
+          <span>{{ user.login }}</span>
+          <button class="icon-btn" (click)="enableEditLogin()" title="Редагувати логін">
+            <i class="fa-solid fa-pen"></i>
+          </button>
+        </ng-container>
+        <ng-template #loginEdit>
+          <input class="form-control" [(ngModel)]="editedLogin" />
+          <button class="icon-btn primary" (click)="sendLoginVerificationCode()" title="Надіслати код">
+            <i class="fa-solid fa-envelope"></i>
+          </button>
+          <input *ngIf="isLoginCodeSent" class="form-control code" [(ngModel)]="loginVerificationCode" placeholder="Код з e-mail"/>
+          <button *ngIf="isLoginCodeSent" class="icon-btn success" (click)="verifyLoginCodeAndChangeLogin()" title="Зберегти">
+            <i class="fa-solid fa-check"></i>
+          </button>
+          <button class="icon-btn" (click)="cancelEditLogin()" title="Скасувати">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </ng-template>
+      </div>
+      <!-- Email -->
+      <div class="field-row">
+        <label>E-mail:</label>
+        <span>{{ user.email }}</span>
+        <button *ngIf="!editEmailMode" class="icon-btn" (click)="enableEditEmail()" title="Змінити e-mail">
+          <i class="fa-solid fa-pen"></i>
+        </button>
+      </div>
+      <div class="field-row" *ngIf="editEmailMode">
+        <label>Новий e-mail:</label>
+        <input class="form-control" [(ngModel)]="editedEmail" type="email" />
+        <button class="icon-btn primary" (click)="sendOldEmailVerificationCode()" title="Код на старий e-mail">
+          <i class="fa-solid fa-envelope-circle-check"></i>
+        </button>
+        <input *ngIf="isOldEmailCodeSent" class="form-control code" [(ngModel)]="oldEmailCode" placeholder="Код зі старого"/>
+        <button class="icon-btn primary" (click)="sendNewEmailVerificationCode()" title="Код на новий e-mail">
+          <i class="fa-solid fa-envelope-open-text"></i>
+        </button>
+        <input *ngIf="isNewEmailCodeSent" class="form-control code" [(ngModel)]="newEmailCode" placeholder="Код з нового"/>
+        <button class="icon-btn success" (click)="changeEmail()" title="Зберегти">
+          <i class="fa-solid fa-check"></i>
+        </button>
+        <button class="icon-btn" (click)="cancelEditEmail()" title="Скасувати">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <!-- Пароль -->
+      <div class="field-row">
+        <label>Пароль:</label>
+        <ng-container *ngIf="!editPasswordMode; else passwordEdit">
+          <span>********</span>
+          <button class="icon-btn" (click)="enableEditPassword()" title="Змінити пароль">
+            <i class="fa-solid fa-pen"></i>
+          </button>
+        </ng-container>
+        <ng-template #passwordEdit>
+          <input class="form-control" type="password" [(ngModel)]="oldPassword" placeholder="Старий"/>
+          <input class="form-control" type="password" [(ngModel)]="editedPassword" placeholder="Новий"/>
+          <input class="form-control" type="password" [(ngModel)]="confirmPassword" placeholder="Підтвердження"/>
+          <button class="icon-btn primary" (click)="sendPasswordVerificationCode()" title="Надіслати код">
+            <i class="fa-solid fa-envelope"></i>
+          </button>
+          <input *ngIf="isPasswordCodeSent" class="form-control code" [(ngModel)]="passwordVerificationCode" placeholder="Код"/>
+          <button class="icon-btn success" (click)="savePasswordCabinet()" title="Зберегти">
+            <i class="fa-solid fa-check"></i>
+          </button>
+          <button class="icon-btn" (click)="cancelEditPassword()" title="Скасувати">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </ng-template>
+      </div>
+      <div *ngIf="message" class="info-msg">{{ message }}</div>
+    </div>
+  </main>
+</div>

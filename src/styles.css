@@ -2,3 +2,211 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+/*Нижче загальні стилі для списку розділів , та списку тем */
+/* Основний контейнер */
+.forum-root, .topic-root {
+  max-width: auto;
+  margin: 0 auto 36px auto;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 18px 0 rgba(20, 80, 150, 0.08);
+  padding: 28px 36px 36px 36px;
+  box-sizing: border-box;
+}
+
+.forum-title, .topic-title {
+  font-size: 2rem;
+  color: #19467e;
+  font-weight: bold;
+  margin-bottom: 26px;
+}
+
+/* Форум - розділи */
+.forum-section-list {
+  width: 100%;
+}
+.forum-section-item {
+  margin-bottom: 18px;
+  border-radius: 9px;
+  background: #f6f8fc;
+  box-shadow: 0 1px 8px 0 rgba(20, 80, 150, 0.04);
+  overflow: hidden;
+  border: 1px solid #e3e7ef;
+  transition: box-shadow 0.18s;
+}
+.forum-section-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  cursor: pointer;
+  padding: 18px 18px 18px 20px;
+  font-size: 1.16rem;
+  background: #eaf1fb;
+  color: #234;
+  font-weight: 500;
+  border-bottom: 1px solid #e1e5ee;
+  transition: background 0.18s;
+}
+.forum-section-header:hover {
+  background: #dbe9fa;
+}
+.forum-section-icon {
+  font-size: 1.25em;
+  color: #185abb;
+  margin-right: 6px;
+}
+.forum-toggle-icon {
+  margin-left: auto;
+  font-size: 1.14em;
+  color: #7b8eb0;
+}
+
+.forum-section-name {
+  flex: 0 1 auto;
+}
+
+.forum-subsection-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-height: 0;
+  overflow: hidden;
+  background: #fcfdfe;
+  transition: max-height 0.3s cubic-bezier(.67,0,.34,1.01);
+}
+.forum-subsection-list.expanded {
+  max-height: 400px;
+  border-top: 1px solid #eef3fa;
+}
+.forum-subsection-item {
+  padding: 15px 36px;
+  border-bottom: 1px solid #f0f3f8;
+  font-size: 1.08rem;
+}
+.forum-subsection-item:last-child {
+  border-bottom: none;
+}
+.forum-subsection-item a {
+  color: #216bd6;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 500;
+  font-size: 1.05em;
+}
+.forum-subsection-item a:hover {
+  color: #174fb6;
+  text-decoration: underline;
+}
+
+/* Теми підрозділів */
+.topic-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 30px;
+  margin-bottom: 6px;
+}
+.topic-search {
+  flex: 0 1 300px;
+  display: flex;
+  align-items: center;
+}
+.topic-search input {
+  width: 260px;
+  border: 1px solid #b8cae8;
+  border-radius: 7px;
+  font-size: 1.03rem;
+  padding: 8px 13px;
+  background: #f4f7fb;
+  color: #16467a;
+  outline: none;
+  margin-left: auto;
+  transition: border 0.18s;
+}
+.topic-search input:focus {
+  border: 1.7px solid #185abb;
+}
+
+.topic-create-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1.04rem;
+  padding: 10px 22px;
+  background: #1967d2;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 1px 5px 0 rgba(30, 50, 110, 0.04);
+  margin: 18px 0 20px 0;
+  transition: background 0.18s, color 0.18s;
+}
+.topic-create-btn:hover {
+  background: #164bb5;
+}
+
+.topic-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.topic-item {
+  padding: 15px 20px;
+  font-size: 1.07rem;
+  border-bottom: 1px solid #edf1fa;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #1b2340;
+  background: #fcfcfe;
+  transition: background 0.13s;
+}
+.topic-item:hover {
+  background: #eef5fd;
+  color: #0c2d6e;
+}
+.topic-item i {
+  color: #477bdc;
+  font-size: 1.03em;
+}
+
+/* Responsive */
+@media (max-width: 800px) {
+  .forum-root, .topic-root {
+    padding: 16px 3vw 26px 3vw;
+    border-radius: 7px;
+  }
+  .topic-header {
+    flex-direction: column;
+    gap: 7px;
+    align-items: stretch;
+  }
+  .topic-search input {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .open-topic-btn, .back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: #f4f8fd;
+  color: #2058a7;
+  border: 1px solid #b6caea;
+  padding: 7px 13px;
+  border-radius: 7px;
+  font-size: 1.01rem;
+  cursor: pointer;
+  margin-top: 3px;
+  transition: background 0.15s, color 0.15s;
+}
+.open-topic-btn:hover, .back-btn:hover {
+  background: #185abb;
+  color: #fff;
+}
+
+}

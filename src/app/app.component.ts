@@ -1,9 +1,12 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { Login } from './components/login/login';
-import { ModalService } from './service/modal.service';
 import { HttpClient } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
+import { User } from './models/user';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { AuthService } from './service/AuthService';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -13,54 +16,60 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class AppComponent {
 
+  bsModalRef!: BsModalRef<Login>;
+
   token: string | null = null;
   isAuthenticated = false;
+    user: User = {
+    id: 0,
+    status: '',
+    title: '',
+    login: '',
+    password: '',
+    nick: '',
+    email: '',
+    avatar_url: '',
+    role:'',
+    token:''
+  };
+  isAuthenticated$!: Observable<boolean>;
+  user$!: Observable<User | null>;
 
- 
   constructor(
-    private modalService: ModalService,
     private http: HttpClient,
-    private toastr: ToastrService
-  ) {}
-
-  ngOnInit(): void {
-    // Тут можна додати логіку перевірки авторизації,
-    // наприклад, зчитування з localStorage або сервісу
-    this.checkAuthentication();
+    private toastr: ToastrService,
+    private modalService: BsModalService,
+    private router: Router,
+    private auth: AuthService
+  ) {
+    this.isAuthenticated$ = this.auth.authState$;
+    this.user$ = this.auth.userState$;
   }
 
-  checkAuthentication(): void {
-    const token = localStorage.getItem('token');
-    this.http.post('http://localhost:8080/api/forum/user/check-token',
-      token )
-   .subscribe({
-     next: (valid) => {
-      if(valid){
-        
-      }else{
-        //токен не підтверджено,видалити токен
-      }
-
-       },
-     error: (err) => {
-         this.toastr.error(err.error);
-     }, 
-  });
+  ngOnInit(): void {
+     // Підписуємося на потік userState$ — синхронізуємо this.user із кожним оновленням
+  this.auth.userState$.subscribe(user => {
+    if (user) {
+      this.user = user;
+    } else {
+      // якщо розлогінився — очищаємо
+      this.user = { id: 0, status: '', title: '', login: '', password: '', nick: '', email: '', avatar_url: '', role:'', token:'' };
     }
-  
-
-  login(): void {
-    // Тимчасова логіка для демонстрації
-    this.isAuthenticated = true;
-    localStorage.setItem('authToken', 'some-token');
+  });
   }
 
   logout(): void {
-    this.isAuthenticated = false;
-    localStorage.removeItem('authToken');
-    localStorage.removeItem('username');
-  } 
-  openModal() {
-    this.modalService.showComponentInModal(Login, { });  }
- 
-} 
+    this.auth.logout();
+    if (this.router.url === '/cabinet') {
+     this.router.navigate(['/']);
+    }
+  }
+
+  openModal(): void {
+    this.bsModalRef = this.modalService.show(Login, { initialState: {} });
+  }
+
+  goToCabinet(): void {
+    this.router.navigate(['/cabinet']);
+  }
+}

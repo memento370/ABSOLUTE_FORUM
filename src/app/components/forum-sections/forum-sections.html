@@ -1,17 +1,24 @@
-<!-- forum-sections.component.html -->
-<div class="sections-container">
-    <h2>Розділи форуму</h2>
-    <div class="section-list">
-      <div *ngFor="let section of sections" class="section-item">
-        <div class="section-header" (click)="toggleSection(section.name)">
-          <h3>{{ section.name }}</h3>
-          <span class="toggle-icon">{{ expandedSection === section.name ? '−' : '+' }}</span>
-        </div>
-        <ul class="subsection-list" [ngClass]="{'expanded': expandedSection === section.name}">
-          <li *ngFor="let subsection of section.subsections">
-            <a [routerLink]="['/topic-type', subsection.link]">{{ subsection.name }}</a>
-          </li>
-        </ul>
+<div class="forum-root">
+  <h2 class="forum-title">Розділи форуму</h2>
+  <div class="forum-section-list">
+    <div *ngFor="let section of sections" class="forum-section-item">
+      <div class="forum-section-header" (click)="toggleSection(section.name)">
+        <span class="forum-section-icon">
+          <i class="fa fa-folder-open" *ngIf="expandedSection === section.name"></i>
+          <i class="fa fa-folder" *ngIf="expandedSection !== section.name"></i>
+        </span>
+        <span class="forum-section-name">{{ section.name }}</span>
+        <span class="forum-toggle-icon">
+          <i class="fa" [ngClass]="expandedSection === section.name ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
+        </span>
       </div>
+      <ul class="forum-subsection-list" [class.expanded]="expandedSection === section.name">
+        <li *ngFor="let subsection of section.subsections" class="forum-subsection-item">
+          <a [routerLink]="['/topic-type', subsection.link]">
+            <i class="fa fa-comments"></i> {{ subsection.name }}
+          </a>
+        </li>
+      </ul>
     </div>
   </div>
+</div>

@@ -1,0 +1,81 @@
+.comment-row {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 1.5em;
+}
+
+.comment-user-block {
+  width: 30%;
+  min-width: 110px;
+  max-width: 160px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.5em 0.5em 0.5em 0;
+}
+
+.comment-avatar {
+  width: 70px;
+  height: 70px;
+  border-radius: 100px;
+  margin-bottom: 0.5em;
+  object-fit: cover;
+  box-shadow: 0 1px 5px #9992;
+}
+
+.comment-nick {
+  font-weight: bold;
+  font-size: 1.1em;
+}
+
+.comment-title {
+  color: #888;
+  font-size: 0.95em;
+}
+
+.comment-main-block {
+  width: 70%;
+  background: #f6f7fa;
+  border-radius: 8px;
+  padding: 1em;
+  box-shadow: 0 1px 3px #0001;
+  margin-left: 1em;
+}
+
+.comment-date {
+  font-size: 0.87em;
+  color: #aaa;
+  margin-bottom: 0.25em;
+}
+
+.comment-text {
+  white-space: pre-line;
+  font-size: 1em;
+}
+.comment-actions {
+  display: flex;
+  gap: 0.6em;
+  justify-content: flex-end;
+  margin-top: 0.4em;
+}
+
+.comment-action-btn {
+  cursor: pointer;
+  font-size: 1.2em;
+  color: #999;
+  transition: color 0.2s;
+}
+
+.comment-action-btn:hover {
+  color: #e74c3c;
+}
+
+.comment-edit-textarea {
+  width: 100%;
+  min-height: 60px;
+  margin-bottom: 0.5em;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  padding: 0.5em;
+}
+

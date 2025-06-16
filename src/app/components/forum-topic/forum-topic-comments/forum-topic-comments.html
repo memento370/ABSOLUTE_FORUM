@@ -1,0 +1,23 @@
+<div class="comment-row">
+  <div class="comment-user-block">
+    <img class="comment-avatar"
+         [src]="comment.createdBy.avatar_url || ('https://ui-avatars.com/api/?name=' + (comment.createdBy.nick || ''))"
+         alt="аватар"/>
+    <div class="comment-nick">{{ comment.createdBy.nick }}</div>
+    <div class="comment-title">{{ comment.createdBy.title }}</div>
+  </div>
+  <div class="comment-main-block">
+    <div class="comment-date">{{ comment.creationDate | date:'dd.MM.yyyy HH:mm' }}</div>
+    <div class="comment-text" *ngIf="!editMode">{{ comment.text }}</div>
+    <textarea *ngIf="editMode" [(ngModel)]="editText" class="comment-edit-textarea"></textarea>
+    <div class="comment-actions">
+      <!-- Показати тільки для автора -->
+      <ng-container *ngIf="currentUser?.id === comment.createdBy?.id">
+        <i class="fa fa-pencil comment-action-btn" title="Редагувати" (click)="onEdit()" *ngIf="!editMode"></i>
+        <i class="fa fa-trash comment-action-btn" title="Видалити" (click)="onDelete()"></i>
+        <button class="btn btn-success btn-sm" *ngIf="editMode" (click)="onSaveEdit()">Зберегти</button>
+        <button class="btn btn-secondary btn-sm" *ngIf="editMode" (click)="onCancelEdit()">Скасувати</button>
+      </ng-container>
+    </div>
+  </div>
+</div>

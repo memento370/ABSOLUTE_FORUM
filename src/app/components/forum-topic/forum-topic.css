@@ -1,0 +1,371 @@
+/*
+============================================================
+   СТИЛІ КОМПОНЕНТА "ТЕМА ФОРУМУ" (оновлено для людського вигляду)
+============================================================
+*/
+
+/* === Головний контейнер === */
+.topic-page-root {
+  max-width: auto;
+  margin: 32px auto;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 2px 20px 0 rgba(24, 60, 140, 0.11);
+  padding: 0;
+  display: flex;
+  min-height: 400px;
+  overflow: hidden;
+}
+
+@media (max-width: 900px) {
+  .topic-page-root {
+    flex-direction: column;
+    max-width: 98vw;
+    margin: 9px auto;
+    border-radius: 8px;
+  }
+}
+
+/* === Блок автора (30%) === */
+.topic-author-block {
+  flex: 0 0 260px;
+  background: #f4f8fd;
+  border-right: 1.5px solid #e3eaf5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 10px 28px 10px;
+  gap: 16px;
+  min-width: 210px;
+  max-width: 320px;
+}
+.topic-author-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #c3dbff;
+  background: #e4ecfa;
+  margin-bottom: 10px;
+  display: block;
+}
+.topic-author-nickname {
+  font-size: 1.23rem;
+  font-weight: 700;
+  color: #185abb;
+  margin-bottom: 4px;
+  text-align: center;
+  word-break: break-word;
+}
+.topic-author-title {
+  font-size: 1.04rem;
+  color: #6a9bd3;
+  font-weight: 500;
+  background: #e6f1fa;
+  padding: 5px 20px;
+  border-radius: 14px;
+  text-align: center;
+}
+
+/* === Блок теми (70%) === */
+.topic-main-block {
+  flex: 1 1 0;
+  padding: 36px 36px 28px 36px;
+  display: flex;
+  flex-direction: column;
+  background: #fafdff;
+}
+@media (max-width: 900px) {
+  .topic-main-block {
+    padding: 23px 6vw 20px 6vw;
+  }
+}
+.topic-page-header {
+  margin-bottom: 10px;
+}
+.topic-page-title {
+  font-size: 2.1rem;
+  color: #185abb;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+.topic-page-meta-block {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px 26px;
+  align-items: center;
+  font-size: 1.06rem;
+  color: #7a97bf;
+  margin-bottom: 7px;
+}
+.topic-page-meta-row {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-weight: 500;
+}
+.topic-page-id {
+  color: #9eb8e3;
+  background: #ecf3fe;
+  border-radius: 7px;
+  padding: 2px 11px;
+}
+.topic-page-type {
+  color: #2566d6;
+  background: #e6f1fc;
+  border-radius: 7px;
+  padding: 2px 13px;
+}
+.topic-page-date {
+  color: #8ba3d1;
+  background: #f2f6fd;
+  border-radius: 7px;
+  padding: 2px 13px;
+}
+.topic-page-title-input {
+  font-size: 1.17rem;
+  font-weight: 600;
+  color: #19467e;
+  border: 1.5px solid #c6d6ee;
+  border-radius: 8px;
+  padding: 10px 18px;
+  margin-bottom: 7px;
+  outline: none;
+  width: 100%;
+}
+.topic-page-title-input:focus {
+  border: 2px solid #185abb;
+}
+
+.topic-page-content {
+  margin-bottom: 32px;
+}
+.topic-page-text {
+  font-size: 1.18rem;
+  color: #234171;
+  background: #f6faff;
+  border-radius: 10px;
+  padding: 22px 18px 22px 18px;
+  min-height: 85px;
+  box-shadow: 0 1px 6px 0 rgba(70, 110, 200, 0.04);
+  word-break: break-word;
+}
+.topic-page-textarea {
+  width: 100%;
+  font-size: 1.09rem;
+  border: 1.5px solid #c6d6ee;
+  border-radius: 8px;
+  padding: 13px 18px;
+  outline: none;
+  margin-bottom: 12px;
+  resize: vertical;
+  background: #fafdff;
+}
+.topic-page-textarea:focus {
+  border: 2px solid #185abb;
+}
+.topic-page-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.07rem;
+  padding: 12px 28px;
+  background: #1967d2;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 2px;
+  box-shadow: 0 1px 6px 0 rgba(36, 70, 150, 0.06);
+  transition: background 0.18s, color 0.18s;
+}
+.topic-page-btn:hover {
+  background: #144fb6;
+}
+
+/* === Коментарі === */
+.topic-comments-block {
+  margin-top: 30px;
+  background: #f6fafd;
+  border-radius: 12px;
+  box-shadow: 0 1px 7px 0 rgba(44,80,170,0.04);
+  padding: 22px 26px 19px 26px;
+}
+.topic-comments-title {
+  font-size: 1.22rem;
+  color: #175699;
+  margin-bottom: 14px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.topic-comments-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 13px 0;
+}
+.topic-comment-item {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 1px 4px 0 rgba(50, 70, 170, 0.04);
+  padding: 13px 17px 10px 17px;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  border-left: 4px solid #b4d3fb;
+}
+.comment-user {
+  font-weight: 700;
+  color: #185abb;
+  font-size: 1.07em;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.comment-date {
+  font-size: 0.94em;
+  color: #97afd8;
+  margin-left: 3px;
+}
+.comment-text {
+  font-size: 1.06em;
+  color: #1e2b4e;
+  margin-top: 2px;
+  word-break: break-word;
+}
+.topic-add-comment {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 18px;
+}
+.topic-add-comment textarea {
+  width: 100%;
+  border: 1.3px solid #b8cae8;
+  border-radius: 8px;
+  font-size: 1.06em;
+  padding: 11px 15px;
+  background: #f8fafd;
+  color: #1b3052;
+  outline: none;
+  transition: border 0.14s;
+  resize: vertical;
+}
+.topic-add-comment textarea:focus {
+  border: 2px solid #185abb;
+}
+.topic-add-comment-btn {
+  align-self: flex-end;
+  background: #185abb;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.04rem;
+  padding: 9px 22px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 1px 3px 0 rgba(30, 50, 110, 0.05);
+  transition: background 0.18s, color 0.18s;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 2px;
+}
+.topic-add-comment-btn:hover {
+  background: #144fb6;
+}
+.topic-section-selectors {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 13px;
+}
+
+.topic-section-select {
+  font-size: 1.09rem;
+  border: 1.5px solid #c6d6ee;
+  border-radius: 8px;
+  padding: 10px 16px;
+  background: #fafdff;
+  color: #234171;
+  outline: none;
+  min-width: 210px;
+  max-width: 350px;
+  font-weight: 500;
+  box-shadow: 0 1px 5px 0 rgba(45, 110, 200, 0.06);
+  transition: border 0.16s;
+}
+
+.topic-section-select:focus {
+  border: 2px solid #185abb;
+  background: #f4f8fd;
+}
+
+@media (max-width: 900px) {
+  .topic-section-selectors {
+    flex-direction: column;
+    gap: 11px;
+  }
+  .topic-section-select {
+    min-width: 120px;
+    width: 100%;
+    max-width: none;
+  }
+}
+
+
+.topic-page-header {
+  margin-bottom: 10px;
+  position: relative;
+  min-height: 48px;
+}
+
+/* Кнопки редагування теми — фіксуємо у правому верхньому куті */
+.topic-action-btns {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  gap: 12px;
+  z-index: 1;
+}
+
+/* Оформлення кнопок */
+.topic-action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 1rem;
+  padding: 8px 20px;
+  background: #eaf2fd;
+  color: #2464b2;
+  border: none;
+  border-radius: 7px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 1px 3px 0 rgba(30, 50, 110, 0.08);
+  transition: background 0.17s, color 0.17s;
+}
+.topic-action-btn:hover {
+  background: #1967d2;
+  color: #fff;
+}
+.topic-breadcrumb-container {
+  width: 100%;
+  background: #f7fafd;
+  padding: 14px 32px 8px 32px;
+  border-radius: 12px 12px 0 0;
+  margin-bottom: -12px; /* перекриває округлення top root для плавного вигляду */
+  box-shadow: 0 1px 6px 0 rgba(80, 110, 180, 0.07);
+}
+
+@media (max-width: 900px) {
+  .topic-breadcrumb-container {
+    padding: 9px 4vw 7px 4vw;
+  }
+}

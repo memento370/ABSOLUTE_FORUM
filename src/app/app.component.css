@@ -49,8 +49,12 @@
 
 .forum-content {
   flex-grow: 1;
-  padding: 20px;
-  text-align: center;
+  /* padding: 20px;  <--- закоментуйте або видаліть! */
+  padding: 0; /* Новий варіант */
+  text-align: left; /* Замість center */
+  min-width: 0;  /* Додати! */
+  min-height: 0; /* Додати! */
+  overflow: hidden; /* Додати! */
 }
 
 .forum-footer {
@@ -59,4 +63,43 @@
   border-top: 1px solid #ddd;
   text-align: center;
   color: #666;
+}
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+}
+.avatar {
+  width: 32px;
+  height: 32px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 1px solid #ccc;
+}
+.user-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+
+.username {
+  font-weight: 600;
+  color: #333;
+}
+
+.title {
+  font-size: 12px;
+  color: #777;
+}
+
+.logout-btn {
+  padding: 8px 15px;
+  border: none;
+  border-radius: 4px;
+  background-color: #dc3545;     /* червоний */
+  color: #fff;
+  cursor: pointer;
+
+  &:hover { background-color: #b52a37; }
 }

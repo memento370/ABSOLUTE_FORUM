@@ -1,6 +1,5 @@
-// forum-sections.component.scss
 .sections-container {
-  max-width: 800px;
+  max-width: auto;
   margin: 20px auto;
   padding: 15px;
   background-color: #fff;
@@ -54,7 +53,7 @@
     transition: max-height 0.3s ease;
 
     &.expanded {
-      max-height: 200px; // Достатньо для підрозділів, можна налаштувати
+      max-height: 200px; 
     }
 
     li {

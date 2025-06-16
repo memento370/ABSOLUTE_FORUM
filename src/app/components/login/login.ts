@@ -5,6 +5,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { switchMap } from 'rxjs';
 import { LoginResponse } from '../../models/login-response';
+import { BsModalRef } from 'ngx-bootstrap/modal';
+import { Router, RouterOutlet } from '@angular/router';
+import { AuthService } from '../../service/AuthService';
+
 
 @Component({
   selector: 'app-login',
@@ -36,7 +40,10 @@ export class Login {
 
   constructor(
     private http: HttpClient,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    public bsModalRef: BsModalRef ,
+    public router : Router,
+    private auth: AuthService,
 ) {}
   sendVerificationCode() {
     if(this.confirmPassword==null||undefined||''){
@@ -92,12 +99,6 @@ export class Login {
   }
 
   register() {
-    // if (this.confirmationCode.length === 0) {
-    //   alert('тут зробити апі запит на реєсрацію');
-    //   return;
-    // }
-    // alert('Реєстрація успішна!');
-
     this.http
     .post('http://localhost:8080/api/forum/user/create-user', {
         email: this.email,
@@ -118,30 +119,17 @@ export class Login {
     });
   }
 
-  loginUser() {
-    const account = {
-      login: this.login,
-      password: this.password
-    };
-  
+  loginUser(): void {
+    const account = { login: this.login, password: this.password };
+
     this.http.post<LoginResponse>('http://localhost:8080/api/forum/user/login', account)
       .subscribe({
-        next: (res: LoginResponse) => {
-          this.toastr.success(res.message, "Успех");
-          localStorage.setItem('token', res.token);
-          localStorage.setItem('status', res.status);
-          localStorage.setItem('nick', res.nick);
-          localStorage.setItem('title', res.title);
-          localStorage.setItem('loginTime', Date.now().toString());
-          // document.cookie = `token=${res.token}; max-age=3600; path=/; Secure; SameSite=Strict`;
-          this.autentification = true;
-          setTimeout(() => {
-            // this.onGetCharacters();
-          }, 1000);
+        next: res => {
+          this.auth.login(res);            
+          this.router.navigate(['/']);
+          this.bsModalRef.hide();          
         },
-        error: (err) => {
-          this.toastr.error(err.error, "Ошибка");
-        }
+        error: err => this.toastr.error(err.error, 'Помилка')
       });
   }
 
@@ -197,6 +185,10 @@ export class Login {
 
      },
   });
+  }
+
+  close(): void {
+    this.bsModalRef.hide();
   }
   }
 
