@@ -51,7 +51,8 @@
                   "maximumError": "4000kB"
                 }
               ],
-              "outputHashing": "all"
+              "outputHashing": "all",
+              "baseHref": "/forum/"
             },
             "development": {
               "optimization": false,
