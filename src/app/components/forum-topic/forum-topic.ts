@@ -171,7 +171,7 @@ export class ForumTopic implements OnInit {
     this.http.post<Topic>(`http://l2-absolute.com/api/forum/topic/create`, payload, { headers }).subscribe({
       next: topic => {
         this.toastr.success('Тему створено!');
-        this.router.navigate(['/forum', 'topic-type', this.newTopic.subSection, 'topic', topic.id]);
+        this.router.navigate(['topic-type', this.newTopic.subSection, 'topic', topic.id]);
       },
       error: () => {
         this.toastr.error('Не вдалося створити тему!');
