@@ -62,10 +62,10 @@ export class Login {
           password: this.password,
           confirmPassword: this.confirmPassword
       };
-      this.http.post('http://localhost:8080/api/forum/user/check-register', account, { responseType: 'text' })
+      this.http.post('http://l2-absolute.com/api/forum/user/check-register', account, { responseType: 'text' })
           .pipe(
               switchMap(() =>
-                  this.http.post('http://localhost:8080/api/forum/user/send-verification',{email: account.email},{ responseType: 'text' })
+                  this.http.post('http://l2-absolute.com/api/forum/user/send-verification',{email: account.email},{ responseType: 'text' })
               )
           )
           .subscribe({
@@ -81,7 +81,7 @@ export class Login {
   }
     verifyCode() {
       this.http
-      .post('http://localhost:8080/api/forum/user/verify-code', {
+      .post('http://l2-absolute.com/api/forum/user/verify-code', {
           email: this.email,
           code: this.verificationCode,
       },{ responseType: 'text' })
@@ -100,7 +100,7 @@ export class Login {
 
   register() {
     this.http
-    .post('http://localhost:8080/api/forum/user/create-user', {
+    .post('http://l2-absolute.com/api/forum/user/create-user', {
         email: this.email,
         login: this.login,
         password:this.password,
@@ -122,7 +122,7 @@ export class Login {
   loginUser(): void {
     const account = { login: this.login, password: this.password };
 
-    this.http.post<LoginResponse>('http://localhost:8080/api/forum/user/login', account)
+    this.http.post<LoginResponse>('http://l2-absolute.com/api/forum/user/login', account)
       .subscribe({
         next: res => {
           this.auth.login(res);            
@@ -134,7 +134,7 @@ export class Login {
   }
 
   sendCodeRestore(){
-    this.http.post('http://localhost:8080/api/forum/user/send-verification-restore', {email: this.email}, { responseType: 'text' })
+    this.http.post('http://l2-absolute.com/api/forum/user/send-verification-restore', {email: this.email}, { responseType: 'text' })
     .subscribe({
       next: () => {
           this.toastr.success('Код підтвердження скидання паролю відправлено на ваш е-мейл , введіть його в поле нижче');
@@ -148,7 +148,7 @@ export class Login {
   }
 
   approweCodeRestore(){
-    this.http.post('http://localhost:8080/api/forum/user/verify-code-restore',
+    this.http.post('http://l2-absolute.com/api/forum/user/verify-code-restore',
        {
         email: this.email,
         code: this.codeRestorePass,
@@ -168,7 +168,7 @@ export class Login {
 
   } 
   changePassword(){
-    this.http.post('http://localhost:8080/api/forum/user/restore-password',
+    this.http.post('http://l2-absolute.com/api/forum/user/restore-password',
       {
        email: this.email,
        pass: this.newPassword,

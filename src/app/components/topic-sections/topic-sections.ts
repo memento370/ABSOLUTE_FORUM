@@ -48,7 +48,7 @@ export class TopicSections implements OnInit {
     // Розкодуємо, якщо адреса виглядає як %2Fdev-news
     const decodedSection = decodeURIComponent(section);
 
-    this.http.get<Topic[]>(`http://localhost:8080/api/forum/topic/by-section/${decodedSection}`).subscribe({
+    this.http.get<Topic[]>(`http://l2-absolute.com/api/forum/topic/by-section/${decodedSection}`).subscribe({
       next: topics => {
         this.topicList = topics;
         this.filteredTopics = topics;

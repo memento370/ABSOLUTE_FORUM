@@ -87,7 +87,7 @@ export class AuthService {
         return of(false);
     }
     return this.http
-      .post<boolean>('http://localhost:8080/api/forum/user/check-user-token',user)
+      .post<boolean>('http://l2-absolute.com/api/forum/user/check-user-token',user)
       .pipe(
         tap(valid => {
           if (!valid) {
@@ -120,7 +120,7 @@ export class AuthService {
     };
 
     return this.http.post<User>(
-      'http://localhost:8080/api/forum/user/update-profile',
+      'http://l2-absolute.com/api/forum/user/update-profile',
       payload,
       { headers }
     );

@@ -122,7 +122,7 @@ export class Cabinet implements OnInit {
       // Зверніть увагу: видаляємо generic-параметр і явно вказуємо responseType
       this.http
         .post(
-          'http://localhost:8080/api/forum/user/upload-avatar',
+          'http://l2-absolute.com/api/forum/user/upload-avatar',
           payload,
           { headers, responseType: 'text' }
         )
@@ -194,7 +194,7 @@ export class Cabinet implements OnInit {
   loadUser() {
     this.http
       .get<User>(
-        'http://localhost:8080/api/forum/user/get-user/' +
+        'http://l2-absolute.com/api/forum/user/get-user/' +
           localStorage.getItem('user_id')
       )
       .subscribe({
@@ -224,7 +224,7 @@ export class Cabinet implements OnInit {
     // Видаляємо старий аватар
     this.http
       .delete<void>(
-        'http://localhost:8080/api/forum/user/delete-avatar',
+        'http://l2-absolute.com/api/forum/user/delete-avatar',
         {
           headers,
           body: { avatar_url: this.user.avatar_url }
@@ -300,7 +300,7 @@ sendLoginVerificationCode() {
   });
 
   this.http.post(
-    'http://localhost:8080/api/forum/user/send-verification-login',
+    'http://l2-absolute.com/api/forum/user/send-verification-login',
     {}, // тіло порожнє, бо e-mail беремо з токену на бекенді
     { headers, responseType: 'text' }
   ).subscribe({
@@ -339,7 +339,7 @@ verifyLoginCodeAndChangeLogin() {
   };
 
   this.http.post(
-    'http://localhost:8080/api/forum/user/change-login',
+    'http://l2-absolute.com/api/forum/user/change-login',
     payload,
     { headers, responseType: 'text' }
   ).subscribe({
@@ -364,7 +364,7 @@ verifyLoginCodeAndChangeLogin() {
     const token = localStorage.getItem('token');
     if (!token) return;
     const headers = new HttpHeaders({ 'Authorization': `Bearer ${token}` });
-    this.http.post('http://localhost:8080/api/forum/user/send-verification-old-email', {}, { headers, responseType: 'text' })
+    this.http.post('http://l2-absolute.com/api/forum/user/send-verification-old-email', {}, { headers, responseType: 'text' })
       .subscribe({
         next: () => {
           this.isOldEmailCodeSent = true;
@@ -382,7 +382,7 @@ verifyLoginCodeAndChangeLogin() {
     const token = localStorage.getItem('token');
     if (!token) return;
     const headers = new HttpHeaders({ 'Authorization': `Bearer ${token}` });
-    this.http.post('http://localhost:8080/api/forum/user/send-verification-new-email', { newEmail: this.editedEmail }, { headers, responseType: 'text' })
+    this.http.post('http://l2-absolute.com/api/forum/user/send-verification-new-email', { newEmail: this.editedEmail }, { headers, responseType: 'text' })
       .subscribe({
         next: () => {
           this.isNewEmailCodeSent = true;
@@ -404,7 +404,7 @@ verifyLoginCodeAndChangeLogin() {
       'Content-Type': 'application/json'
     });
     this.http.post(
-      'http://localhost:8080/api/forum/user/change-email',
+      'http://l2-absolute.com/api/forum/user/change-email',
       {
         newEmail: this.editedEmail,
         oldEmailCode: this.oldEmailCode,
@@ -433,7 +433,7 @@ verifyLoginCodeAndChangeLogin() {
     const token = localStorage.getItem('token');
     if (!token) return;
     const headers = new HttpHeaders({ 'Authorization': `Bearer ${token}` });
-    this.http.post('http://localhost:8080/api/forum/user/send-verification-password', {}, { headers, responseType: 'text' })
+    this.http.post('http://l2-absolute.com/api/forum/user/send-verification-password', {}, { headers, responseType: 'text' })
       .subscribe({
         next: () => {
           this.isPasswordCodeSent = true;
@@ -466,7 +466,7 @@ verifyLoginCodeAndChangeLogin() {
       code: this.passwordVerificationCode
     };
     this.http.post(
-      'http://localhost:8080/api/forum/user/change-password',
+      'http://l2-absolute.com/api/forum/user/change-password',
       payload,
       { headers, responseType: 'text' }
     ).subscribe({
