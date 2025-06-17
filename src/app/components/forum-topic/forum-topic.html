@@ -49,7 +49,6 @@
       </div>
     </div>
   </ng-container>
-
   <!-- ----------- Перегляд/Редагування теми ----------- -->
   <ng-template #viewTopicBlock>
     <div class="topic-author-block">
@@ -65,7 +64,6 @@
     </div>
     <div class="topic-main-block">
       <div class="topic-page-header">
-        <!-- Кнопки редагування/видалення -->
         <div class="topic-action-btns" *ngIf="isTopicAuthor() && !editMode && !isCreateMode">
           <button (click)="goToEditMode()" class="topic-action-btn">
             <i class="fa fa-edit"></i> Редагувати
@@ -74,7 +72,6 @@
             <i class="fa fa-trash"></i> Видалити
           </button>
         </div>
-
         <!-- Режим редагування -->
         <div *ngIf="editMode && !isCreateMode && topic; else topicViewMode">
           <input class="topic-page-title-input"

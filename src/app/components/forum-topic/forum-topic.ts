@@ -3,7 +3,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AuthService } from '../../service/AuthService';
 import { ToastrService } from 'ngx-toastr';
-
 import { Comment } from '../../models/comment';
 import { Topic } from '../../models/topic';
 import { User } from '../../models/user';
@@ -22,18 +21,14 @@ export class ForumTopic implements OnInit {
 
   isCreateMode = false;
   topicId: string = '';
-  topic: Topic | null = null; // Для перегляду і для comments
-  newTopic: Topic = this.initNewTopic(); // Для створення
-
+  topic: Topic | null = null;
+  newTopic: Topic = this.initNewTopic();
   currentUser: User | null = null;
   newComment: string = '';
-
   selectedSection: string = '';
   sections: Section[] = SECTIONS;
-
   author: User | undefined 
-
-  editMode = false; // Для відображення редактора
+  editMode = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -53,8 +48,6 @@ export class ForumTopic implements OnInit {
     this.route.paramMap.subscribe(params => {
       this.topicId = params.get('id') || '';
       this.auth.userState$.subscribe(user => this.currentUser = user);
-
-      // 1. Перевіряємо наявність "edit" в url:
       this.editMode = this.router.url.endsWith('/edit');
 
       if (this.topicId === 'create') {
@@ -80,7 +73,7 @@ export class ForumTopic implements OnInit {
     return {
       id: 0,
       status: 'ACTIVE',
-      createdBy: {} as User, // об'єкт User, ініціалізується при створенні
+      createdBy: {} as User,
       creationDate: new Date(),
       title: '',
       message: '',
@@ -98,41 +91,36 @@ export class ForumTopic implements OnInit {
     this.newTopic.subSection = '';
   }
 
-
-    loadTopic(): void {
-      this.http.get<Topic>(`http://l2-absolute.com/api/forum/topic/${this.topicId}`).subscribe({
-        next: topic => {
-          this.topic = topic;
-          if (this.topic) {
-            this.loadAuthor();
-            this.loadComments(this.topic.id);
-          }
-        },
-        error: () => {
-          this.toastr.error('Не вдалося завантажити тему.');
-          this.router.navigate(['/']);
+  loadTopic(): void {
+    this.http.get<Topic>(`http://l2-absolute.com/api/forum/topic/${this.topicId}`).subscribe({
+      next: topic => {
+        this.topic = topic;
+        if (this.topic) {
+          this.loadAuthor();
+          this.loadComments(this.topic.id);
         }
-      });
-    }
+      },
+      error: () => {
+        this.toastr.error('Не вдалося завантажити тему.');
+        this.router.navigate(['/']);
+      }
+    });
+  }
 
-    loadComments(topicId: number): void {
-      this.http.get<Comment[]>(`http://l2-absolute.com/api/forum/comment-topic/${topicId}`).subscribe({
-        next: comments => {
-          if (this.topic) {
-            this.topic.comments = comments;
-          }
-        },
-        error: () => {
-          this.toastr.error('Не вдалося завантажити коментарі.');
+  loadComments(topicId: number): void {
+    this.http.get<Comment[]>(`http://l2-absolute.com/api/forum/comment-topic/${topicId}`).subscribe({
+      next: comments => {
+        if (this.topic) {
+          this.topic.comments = comments;
         }
-      });
-    }
+      },
+      error: () => {
+        this.toastr.error('Не вдалося завантажити коментарі.');
+      }
+    });
+  }
   loadAuthor() {
-    this.http
-      .get<User>(
-        'http://l2-absolute.com/api/forum/user/get-user/' +
-          this.topic?.createdBy
-      )
+    this.http.get<User>('http://l2-absolute.com/api/forum/user/get-user/' +this.topic?.createdBy)
       .subscribe({
         next: (data) => {
           this.author = data;
@@ -142,7 +130,6 @@ export class ForumTopic implements OnInit {
         },
       });
   }
-
 
   saveTopic(): void {
     const user = this.auth.getUserFromStorage();
@@ -158,9 +145,7 @@ export class ForumTopic implements OnInit {
       this.toastr.error('Оберіть підсекцію!');
       return;
     }
-    // Записати автора
     this.newTopic.createdBy = user;
-
     const payload = {
       subSection: this.newTopic.subSection,
       title: this.newTopic.title,
@@ -179,37 +164,36 @@ export class ForumTopic implements OnInit {
     });
   }
 
-    addComment(): void {
-      const user = this.auth.getUserFromStorage();
-      if (!user || !this.topic) {
-        this.toastr.error('Авторизуйтесь для коментування');
-        return;
-      }
-      if (!this.newComment.trim()) return;
-
-      const payload = {
-        text: this.newComment,
-        topicId: this.topic.id
-      };
-      const headers = new HttpHeaders().set('Authorization', `Bearer ${user.token}`);
-      this.http.post<Comment>(
-        `http://l2-absolute.com/api/forum/comment-topic/create`, 
-        payload, 
-        { headers }
-      ).subscribe({
-        next: c => {
-          this.topic?.comments.push(c);
-          this.newComment = '';
-          this.toastr.success('Коментар додано!');
-        },
-        error: (err) => {
-          this.toastr.error(err.error,'Помилка!');
-        }
-      });
+  addComment(): void {
+    const user = this.auth.getUserFromStorage();
+    if (!user || !this.topic) {
+      this.toastr.error('Авторизуйтесь для коментування');
+      return;
     }
+    if (!this.newComment.trim()) return;
+
+    const payload = {
+      text: this.newComment,
+      topicId: this.topic.id
+    };
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${user.token}`);
+    this.http.post<Comment>(
+      `http://l2-absolute.com/api/forum/comment-topic/create`, 
+      payload, 
+      { headers }
+    ).subscribe({
+      next: c => {
+        this.topic?.comments.push(c);
+        this.newComment = '';
+        this.toastr.success('Коментар додано!');
+      },
+      error: (err) => {
+        this.toastr.error(err.error,'Помилка!');
+      }
+    });
+  }
 
   private setSectionAndSubsection(subSection: string) {
-    // Знайти секцію, в якій є потрібна підсекція
     for (const section of this.sections) {
       const match = section.subsections.find(sub => sub.link === subSection);
       if (match) {

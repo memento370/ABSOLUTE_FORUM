@@ -1,10 +1,4 @@
-/*
-============================================================
-   СТИЛІ КОМПОНЕНТА "ТЕМА ФОРУМУ" (оновлено для людського вигляду)
-============================================================
-*/
 
-/* === Головний контейнер === */
 .topic-page-root {
   max-width: auto;
   margin: 32px auto;
@@ -26,7 +20,6 @@
   }
 }
 
-/* === Блок автора (30%) === */
 .topic-author-block {
   flex: 0 0 260px;
   background: #f4f8fd;
@@ -67,7 +60,6 @@
   text-align: center;
 }
 
-/* === Блок теми (70%) === */
 .topic-main-block {
   flex: 1 1 0;
   padding: 36px 36px 28px 36px;
@@ -187,7 +179,6 @@
   background: #144fb6;
 }
 
-/* === Коментарі === */
 .topic-comments-block {
   margin-top: 30px;
   background: #f6fafd;
@@ -325,7 +316,6 @@
   min-height: 48px;
 }
 
-/* Кнопки редагування теми — фіксуємо у правому верхньому куті */
 .topic-action-btns {
   position: absolute;
   top: 0;
@@ -335,7 +325,6 @@
   z-index: 1;
 }
 
-/* Оформлення кнопок */
 .topic-action-btn {
   display: inline-flex;
   align-items: center;

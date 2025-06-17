@@ -14,14 +14,14 @@ import { AuthService } from '../../../service/AuthService';
 export class ForumTopicComments {
   @Input() comment!: Comment;
   @Input() currentUser!: User | null;
-
   @Output() commentDeleted = new EventEmitter<number>();
   @Output() commentUpdated = new EventEmitter<Comment>();
 
   editMode = false;
   editText: string = '';
 
-  constructor(private http: HttpClient, private toastr: ToastrService, private auth: AuthService) {}
+  constructor(private http: HttpClient, private toastr: ToastrService, private auth: AuthService) 
+  {}
 
   onEdit() {
     this.editMode = true;
@@ -37,7 +37,6 @@ export class ForumTopicComments {
     const user = this.auth.getUserFromStorage();
     if (!user) return;
     const headers = new HttpHeaders().set('Authorization', `Bearer ${user.token}`);
-
     this.http.put<Comment>(
       `http://l2-absolute.com/api/forum/comment-topic/update/${this.comment.id}`,
       { text: this.editText, topicId: this.comment.topicId },

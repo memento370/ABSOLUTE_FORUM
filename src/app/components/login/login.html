@@ -34,16 +34,13 @@
         <label class="form-label">Підтвердити пароль</label>
         <input type="password" class="form-control" [(ngModel)]="confirmPassword" />
       </div>
-      
       <button *ngIf="!isCodeSent" class="btn btn-primary w-100" (click)="sendVerificationCode()">Відправити код на e-mail</button>
-      
       <div *ngIf="isCodeSent" class="mt-3">
         <label class="form-label">Підтвердіть код</label>
         <input type="text" class="form-control mb-2" [(ngModel)]="confirmationCode" />
         <button class="btn btn-success w-100" (click)="register()">Реєстрація</button>
       </div>
     </div>
-
     <!-- Авторизація -->
     <div *ngIf="statusTab=='login'">
       <div class="mb-3">
@@ -56,7 +53,6 @@
       </div>
       <button class="btn btn-primary w-100" (click)="loginUser()">Авторизація</button>
     </div>
- 
     <div *ngIf="statusTab== 'restore'">
       <div *ngIf="statusRestorePassword == 'default'">
         <div class="mb-3">
@@ -86,7 +82,6 @@
          <h5>Пароль успішно змінено!Авторизуйтесь!</h5>
         </div>
       </div>
-
     </div>
   </div>
 </div>

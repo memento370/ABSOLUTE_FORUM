@@ -4,8 +4,6 @@
   background: #fafbfc;
   font-family: Arial, sans-serif;
 }
-
-/* Sidebar */
 .cabinet-sidebar {
   min-width: 160px;
   max-width: 190px;
@@ -39,8 +37,6 @@
   background: #ddeaff;
   color: #1976d2;
 }
-
-/* Main */
 .cabinet-main {
   flex: 1;
   padding: 32px 30px;
@@ -49,8 +45,6 @@
   flex-direction: column;
   align-items: flex-start;
 }
-
-/* AVATAR */
 .cabinet-avatar-block {
   display: flex;
   flex-direction: column;
@@ -89,8 +83,6 @@
   background: #ffe0e0;
   color: #b62220;
 }
-
-/* upload avatar controls */
 .cabinet-avatar-upload-global {
   display: flex;
   flex-direction: column;
@@ -110,8 +102,6 @@
   gap: 7px;
   padding: 5px 15px;
 }
-
-/* FIELDS */
 .fields-col {
   display: flex;
   flex-direction: column;
@@ -130,8 +120,6 @@
   font-weight: 600;
   font-size: 1.07em;
 }
-
-/* input */
 .form-control {
   padding: 7px 12px;
   font-size: 1.06em;
@@ -143,8 +131,6 @@
 }
 .form-control:focus { border-color: #1976d2; }
 .form-control.code { width: 108px; }
-
-/* Кнопки-іконки */
 .icon-btn {
   background: none;
   border: none;
@@ -184,8 +170,6 @@
   background: #ddeaff;
   color: #0d3d80;
 }
-
-/* Повідомлення */
 .info-msg {
   color: #1976d2;
   font-size: 1em;
@@ -194,7 +178,6 @@
 
 .me-1 { margin-right: 7px; }
 
-/* адаптація */
 @media (max-width: 800px) {
   .cabinet-root { flex-direction: column; }
   .cabinet-sidebar { flex-direction: row; height: auto; min-width: 0; max-width: 100vw; border-right: none; border-bottom: 1px solid #e0e0e0; padding-top: 0; }

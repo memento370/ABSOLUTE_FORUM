@@ -12,7 +12,6 @@ export class ForumSections {
   
   sections: Section[] = SECTIONS;
 
-  // Логіка для розгортання/згортання розділів (опціонально)
   expandedSection: string | null = null;
 
   toggleSection(sectionName: string): void {

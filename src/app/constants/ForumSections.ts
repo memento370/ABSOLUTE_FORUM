@@ -20,7 +20,7 @@ export const SECTIONS: Section[] = [
     ]
   },
   {
-    name: 'Общее',
+    name: 'Загальне',
     subsections: [
       { name: 'Новини', link: 'news' },
       { name: 'Рекрутинг', link: 'discussions' },

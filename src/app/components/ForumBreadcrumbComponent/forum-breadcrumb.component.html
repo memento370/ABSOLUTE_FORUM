@@ -4,8 +4,7 @@
       class="breadcrumb-item"
       *ngFor="let crumb of crumbs; let last = last"
       [class.active]="last"
-      [attr.aria-current]="last ? 'page' : null"
-    >
+      [attr.aria-current]="last ? 'page' : null">
       <ng-container *ngIf="crumb.link && !last; else lastCrumb">
         <a [routerLink]="crumb.link">{{ crumb.label }}</a>
       </ng-container>

@@ -1,14 +1,12 @@
 // login.component.ts
 import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { switchMap } from 'rxjs';
 import { LoginResponse } from '../../models/login-response';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { Router, RouterOutlet } from '@angular/router';
 import { AuthService } from '../../service/AuthService';
-
 
 @Component({
   selector: 'app-login',
@@ -17,7 +15,6 @@ import { AuthService } from '../../service/AuthService';
   standalone: false,
 })
 export class Login {
-
   statusTab = 'register';
   email = '';
   login = '';
@@ -47,14 +44,13 @@ export class Login {
 ) {}
   sendVerificationCode() {
     if(this.confirmPassword==null||undefined||''){
-      this.toastr.error("Подтвердите пароль", "Ошибка");
+      this.toastr.error("Підтвердіть пароль", "Помилка");
       return;
     }
     if (this.password !== this.confirmPassword) {
-      this.toastr.error("Пароли не совпадают", "Ошибка");
+      this.toastr.error("Паролі не співпадають", "Поилка");
       return;
     }
-
       const account = {
           email: this.email,
           login: this.login,
@@ -70,7 +66,7 @@ export class Login {
           )
           .subscribe({
               next: () => {
-                  this.toastr.success('Код подтверждения регистрации отправлен на ваш e-mail. Проверьте ваш почтовый ящик и введите его в поле ниже для подтверждения регистрации');
+                  this.toastr.success('Код підтвердження було надіслано на ваш E-mail.Введіть його в поле нижче.');
                   this.isCodeSent = true;
               },
               error: (err) => {
@@ -79,23 +75,23 @@ export class Login {
               }
           });
   }
-    verifyCode() {
-      this.http
-      .post('http://l2-absolute.com/api/forum/user/verify-code', {
-          email: this.email,
-          code: this.verificationCode,
-      },{ responseType: 'text' })
-      .subscribe({
-          next: () => {
-              this.toastr.success('Код регистрации подтвержден');
-          this.register();
-          },
-          error: (err) => {
-              this.toastr.error(err.error);
-              this.isCodeSent = false;
-              this.registerSuccess = false;
-          },
-      });
+  verifyCode() {
+    this.http
+    .post('http://l2-absolute.com/api/forum/user/verify-code', {
+        email: this.email,
+        code: this.verificationCode,
+    },{ responseType: 'text' })
+    .subscribe({
+        next: () => {
+            this.toastr.success('Код реєстрації підтверджено');
+        this.register();
+        },
+        error: (err) => {
+            this.toastr.error(err.error);
+            this.isCodeSent = false;
+            this.registerSuccess = false;
+        },
+    });
   }
 
   register() {
@@ -108,8 +104,7 @@ export class Login {
     },{ responseType: 'text' })
     .subscribe({
         next: () => {
-            this.toastr.success('Регистрация успешна');
-        // this.register();
+            this.toastr.success('Реєстрація успішна');
         },
         error: (err) => {
             this.toastr.error(err.error);
@@ -121,7 +116,6 @@ export class Login {
 
   loginUser(): void {
     const account = { login: this.login, password: this.password };
-
     this.http.post<LoginResponse>('http://l2-absolute.com/api/forum/user/login', account)
       .subscribe({
         next: res => {
