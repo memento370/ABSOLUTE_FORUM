@@ -11,20 +11,20 @@ export interface Section {
 
 export const SECTIONS: Section[] = [
   {
-    name: 'Тех.поддержка',
+    name: 'Тех.підтримка',
     subsections: [
-      { name: 'Новости разработки', link: 'dev-news' },
-      { name: 'Описание сервера', link: 'server-info' },
-      { name: 'Баги и фиксы', link: 'bugs-fixes' },
-      { name: 'Пожелания и предложения', link: 'suggestions' },
+      { name: 'Новини розробки', link: 'dev-news' },
+      { name: 'Опис серверу', link: 'server-info' },
+      { name: 'Баги та фікси', link: 'bugs-fixes' },
+      { name: 'Побажання та пропозиції', link: 'suggestions' },
     ]
   },
   {
     name: 'Общее',
     subsections: [
-      { name: 'Новости', link: 'news' },
+      { name: 'Новини', link: 'news' },
       { name: 'Рекрутинг', link: 'discussions' },
-      { name: 'Общение', link: 'speaking' }
+      { name: 'Спілкування', link: 'speaking' }
     ]
   }
 ];
