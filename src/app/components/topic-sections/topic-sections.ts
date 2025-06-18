@@ -34,9 +34,7 @@ export class TopicSections implements OnInit {
       this.loadTopicsBySection(this.typeTopic);
     });
     this.typeTopic = this.route.snapshot.paramMap.get('type') || '';
-
     const subName = this.getSubsectionName(this.typeTopic);
-
     if (!subName) {
       this.toastr.error('Такої підсекції не існує!');
       this.router.navigate(['/']);
@@ -45,9 +43,7 @@ export class TopicSections implements OnInit {
   }
 
   loadTopicsBySection(section: string) {
-    // Розкодуємо, якщо адреса виглядає як %2Fdev-news
     const decodedSection = decodeURIComponent(section);
-
     this.http.get<Topic[]>(`http://l2-absolute.com/api/forum/topic/by-section/${decodedSection}`).subscribe({
       next: topics => {
         this.topicList = topics;

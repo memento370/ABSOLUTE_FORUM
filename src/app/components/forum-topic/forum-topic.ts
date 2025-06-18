@@ -158,8 +158,8 @@ export class ForumTopic implements OnInit {
         this.toastr.success('Тему створено!');
         this.router.navigate(['topic-type', this.newTopic.subSection, 'topic', topic.id]);
       },
-      error: () => {
-        this.toastr.error('Не вдалося створити тему!');
+      error: (err) => {
+        this.toastr.error(err.error,'Не вдалося створити тему!');
       }
     });
   }
