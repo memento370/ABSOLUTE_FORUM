@@ -92,7 +92,7 @@ export class ForumTopic implements OnInit {
   }
 
   loadTopic(): void {
-    this.http.get<Topic>(`http://l2-absolute.com/api/forum/topic/${this.topicId}`).subscribe({
+    this.http.get<Topic>(`https://l2-absolute.com/api/forum/topic/${this.topicId}`).subscribe({
       next: topic => {
         this.topic = topic;
         if (this.topic) {
@@ -108,7 +108,7 @@ export class ForumTopic implements OnInit {
   }
 
   loadComments(topicId: number): void {
-    this.http.get<Comment[]>(`http://l2-absolute.com/api/forum/comment-topic/${topicId}`).subscribe({
+    this.http.get<Comment[]>(`https://l2-absolute.com/api/forum/comment-topic/${topicId}`).subscribe({
       next: comments => {
         if (this.topic) {
           this.topic.comments = comments;
@@ -120,7 +120,7 @@ export class ForumTopic implements OnInit {
     });
   }
   loadAuthor() {
-    this.http.get<User>('http://l2-absolute.com/api/forum/user/get-user/' +this.topic?.createdBy)
+    this.http.get<User>('https://l2-absolute.com/api/forum/user/get-user/' +this.topic?.createdBy)
       .subscribe({
         next: (data) => {
           this.author = data;
@@ -153,7 +153,7 @@ export class ForumTopic implements OnInit {
     };
 
     const headers = new HttpHeaders().set('Authorization', `Bearer ${user.token}`);
-    this.http.post<Topic>(`http://l2-absolute.com/api/forum/topic/create`, payload, { headers }).subscribe({
+    this.http.post<Topic>(`https://l2-absolute.com/api/forum/topic/create`, payload, { headers }).subscribe({
       next: topic => {
         this.toastr.success('Тему створено!');
         this.router.navigate(['topic-type', this.newTopic.subSection, 'topic', topic.id]);
@@ -178,7 +178,7 @@ export class ForumTopic implements OnInit {
     };
     const headers = new HttpHeaders().set('Authorization', `Bearer ${user.token}`);
     this.http.post<Comment>(
-      `http://l2-absolute.com/api/forum/comment-topic/create`, 
+      `https://l2-absolute.com/api/forum/comment-topic/create`, 
       payload, 
       { headers }
     ).subscribe({
@@ -255,7 +255,7 @@ export class ForumTopic implements OnInit {
       message: this.topic.message,
       subSection: this.topic.subSection,
     };
-    this.http.put<Topic>(`http://l2-absolute.com/api/forum/topic/update/${this.topic.id}`, payload, { headers })
+    this.http.put<Topic>(`https://l2-absolute.com/api/forum/topic/update/${this.topic.id}`, payload, { headers })
       .subscribe({
         next: (updated) => {
           this.toastr.success('Тему оновлено!');
@@ -278,7 +278,7 @@ export class ForumTopic implements OnInit {
       return;
     }
     const headers = new HttpHeaders().set('Authorization', `Bearer ${user.token}`);
-    this.http.delete(`http://l2-absolute.com/api/forum/topic/delete/${this.topic.id}`, { headers })
+    this.http.delete(`https://l2-absolute.com/api/forum/topic/delete/${this.topic.id}`, { headers })
       .subscribe({
         next: () => {
           this.toastr.success('Тему видалено!');

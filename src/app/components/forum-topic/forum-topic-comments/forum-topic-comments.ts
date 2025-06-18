@@ -38,7 +38,7 @@ export class ForumTopicComments {
     if (!user) return;
     const headers = new HttpHeaders().set('Authorization', `Bearer ${user.token}`);
     this.http.put<Comment>(
-      `http://l2-absolute.com/api/forum/comment-topic/update/${this.comment.id}`,
+      `https://l2-absolute.com/api/forum/comment-topic/update/${this.comment.id}`,
       { text: this.editText, topicId: this.comment.topicId },
       { headers }
     ).subscribe({
@@ -61,7 +61,7 @@ export class ForumTopicComments {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${user.token}`);
 
     this.http.delete(
-      `http://l2-absolute.com/api/forum/comment-topic/delete/${this.comment.id}`,
+      `https://l2-absolute.com/api/forum/comment-topic/delete/${this.comment.id}`,
       { headers }
     ).subscribe({
       next: () => {

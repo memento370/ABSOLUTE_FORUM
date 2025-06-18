@@ -44,7 +44,7 @@ export class TopicSections implements OnInit {
 
   loadTopicsBySection(section: string) {
     const decodedSection = decodeURIComponent(section);
-    this.http.get<Topic[]>(`http://l2-absolute.com/api/forum/topic/by-section/${decodedSection}`).subscribe({
+    this.http.get<Topic[]>(`https://l2-absolute.com/api/forum/topic/by-section/${decodedSection}`).subscribe({
       next: topics => {
         this.topicList = topics;
         this.filteredTopics = topics;

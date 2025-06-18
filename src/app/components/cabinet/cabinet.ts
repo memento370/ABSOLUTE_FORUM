@@ -105,7 +105,7 @@ export class Cabinet implements OnInit {
         'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json',
       });
-      this.http.post('http://l2-absolute.com/api/forum/user/upload-avatar',payload,{ headers, responseType: 'text' })
+      this.http.post('https://l2-absolute.com/api/forum/user/upload-avatar',payload,{ headers, responseType: 'text' })
       .subscribe({
           next: (url: string) => {
             this.user.avatar_url = url;
@@ -166,7 +166,7 @@ export class Cabinet implements OnInit {
     this.editPasswordMode = false;
   }
   loadUser() {
-    this.http.get<User>('http://l2-absolute.com/api/forum/user/get-user/' +localStorage.getItem('user_id'))
+    this.http.get<User>('https://l2-absolute.com/api/forum/user/get-user/' +localStorage.getItem('user_id'))
       .subscribe({
         next: (data) => {
           this.user = data;
@@ -188,7 +188,7 @@ export class Cabinet implements OnInit {
       'Authorization': `Bearer ${token}`,
       'Content-Type': 'application/json',
     });
-    this.http.delete<void>('http://l2-absolute.com/api/forum/user/delete-avatar',
+    this.http.delete<void>('https://l2-absolute.com/api/forum/user/delete-avatar',
         {
           headers,
           body: { avatar_url: this.user.avatar_url }
@@ -258,7 +258,7 @@ export class Cabinet implements OnInit {
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
-    this.http.post('http://l2-absolute.com/api/forum/user/send-verification-login',{},{ headers, responseType: 'text' })
+    this.http.post('https://l2-absolute.com/api/forum/user/send-verification-login',{},{ headers, responseType: 'text' })
     .subscribe({
       next: msg => {
         this.toastr.success('Код підтвердження надіслано на e-mail');
@@ -292,7 +292,7 @@ export class Cabinet implements OnInit {
       login: this.editedLogin,
       code: this.loginVerificationCode
     };
-    this.http.post('http://l2-absolute.com/api/forum/user/change-login',payload,{ headers, responseType: 'text' })
+    this.http.post('https://l2-absolute.com/api/forum/user/change-login',payload,{ headers, responseType: 'text' })
     .subscribe({
       next: msg => {
         this.toastr.success('Логін змінено');
@@ -314,7 +314,7 @@ export class Cabinet implements OnInit {
     const token = localStorage.getItem('token');
     if (!token) return;
     const headers = new HttpHeaders({ 'Authorization': `Bearer ${token}` });
-    this.http.post('http://l2-absolute.com/api/forum/user/send-verification-old-email', {}, { headers, responseType: 'text' })
+    this.http.post('https://l2-absolute.com/api/forum/user/send-verification-old-email', {}, { headers, responseType: 'text' })
       .subscribe({
         next: () => {
           this.isOldEmailCodeSent = true;
@@ -332,7 +332,7 @@ export class Cabinet implements OnInit {
     const token = localStorage.getItem('token');
     if (!token) return;
     const headers = new HttpHeaders({ 'Authorization': `Bearer ${token}` });
-    this.http.post('http://l2-absolute.com/api/forum/user/send-verification-new-email', { newEmail: this.editedEmail }, { headers, responseType: 'text' })
+    this.http.post('https://l2-absolute.com/api/forum/user/send-verification-new-email', { newEmail: this.editedEmail }, { headers, responseType: 'text' })
       .subscribe({
         next: () => {
           this.isNewEmailCodeSent = true;
@@ -353,7 +353,7 @@ export class Cabinet implements OnInit {
       'Authorization': `Bearer ${token}`,
       'Content-Type': 'application/json'
     });
-    this.http.post('http://l2-absolute.com/api/forum/user/change-email',
+    this.http.post('https://l2-absolute.com/api/forum/user/change-email',
       {
         newEmail: this.editedEmail,
         oldEmailCode: this.oldEmailCode,
@@ -381,7 +381,7 @@ export class Cabinet implements OnInit {
     const token = localStorage.getItem('token');
     if (!token) return;
     const headers = new HttpHeaders({ 'Authorization': `Bearer ${token}` });
-    this.http.post('http://l2-absolute.com/api/forum/user/send-verification-password', {}, { headers, responseType: 'text' })
+    this.http.post('https://l2-absolute.com/api/forum/user/send-verification-password', {}, { headers, responseType: 'text' })
       .subscribe({
         next: () => {
           this.isPasswordCodeSent = true;
@@ -414,7 +414,7 @@ export class Cabinet implements OnInit {
       code: this.passwordVerificationCode
     };
     this.http.post(
-      'http://l2-absolute.com/api/forum/user/change-password',
+      'https://l2-absolute.com/api/forum/user/change-password',
       payload,
       { headers, responseType: 'text' }
     ).subscribe({
