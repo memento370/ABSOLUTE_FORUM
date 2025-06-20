@@ -7,7 +7,7 @@
     <div class="comment-title">{{ comment.createdBy.title }}</div>
   </div>
   <div class="comment-main-block">
-    <div class="comment-date">{{ comment.creationDate | date:'dd.MM.yyyy HH:mm' }}</div>
+    <div class="comment-date">{{ comment.creationDate | date:'medium' }}</div>
     <div class="comment-text" *ngIf="!editMode">{{ comment.text }}</div>
     <textarea *ngIf="editMode" [(ngModel)]="editText" class="comment-edit-textarea"></textarea>
     <div class="comment-actions">
